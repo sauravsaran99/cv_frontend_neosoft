@@ -50,7 +50,7 @@ export default function Dashboard() {
 
   return (
     <DashboardLayout>
-      <Typography variant="h5" fontWeight={700} mb={3}>
+      <Typography variant="h5" fontWeight={700} mb={3} mt={8}>
         Your CVs
       </Typography>
 
