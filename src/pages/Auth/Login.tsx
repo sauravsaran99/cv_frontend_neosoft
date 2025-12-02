@@ -5,12 +5,22 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import GoogleLoginButton from "../../components/SocialGoogleButton";
 import AuthLayout from "../../layouts/AuthLayout";
 
 export default function Login() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // If user already has a token, don't show login page
+    if (localStorage.getItem('token')) {
+      navigate('/');
+    }
+  }, [navigate]);
+
   const [form, setForm] = useState({ identifier: "", password: "" });
 
   const submit = async () => {
@@ -20,7 +30,8 @@ export default function Login() {
         form
       );
       localStorage.setItem("token", res.data.token);
-      window.location.href = "/dashboard";
+      // keep SPA navigation consistent
+      navigate('/dashboard');
     } catch (err: any) {
       alert(err?.response?.data?.message || "Login failed");
     }

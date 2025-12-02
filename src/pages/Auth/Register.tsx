@@ -5,10 +5,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import AuthLayout from "../../layouts/AuthLayout";
 import GoogleLoginButton from "../../components/SocialGoogleButton";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -17,6 +18,15 @@ export default function Register() {
     phone: "",
     password: "",
   });
+
+    const navigate = useNavigate();
+
+  useEffect(() => {
+    // If user already has a token, don't show login page
+    if (localStorage.getItem('token')) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   const submit = async () => {
     try {
